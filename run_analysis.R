@@ -10,3 +10,16 @@
 
  #5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+# Load Packages and get the Data
+install.packages("data.table")
+install.packages("reshape2")
+library(data.table)
+library(reshape2)
+mywd <- getwd()
+url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+download.file(url,file.path(mywd, "MessyData.zip"))
+unzip(zipfile="MessyData.zip")
+
+
+
+
