@@ -61,8 +61,8 @@ mergeddatasets[["NumberofSubject"]] <- as.factor(mergeddatasets[, NumberofSubjec
 mergeddatasets <- reshape2::melt(data = mergeddatasets, id = c("NumberofSubject", "Activity"))
 mergeddatasets <- reshape2::dcast(data = mergeddatasets, NumberofSubject + Activity ~ variable, fun.aggregate = mean)
 
-data.table::fwrite(x = mergeddatasets, file = "tidyData.txt", quote = FALSE)
-
+write.table(mergeddatasets, file = "notmessy.csv",row.names=FALSE)
+            
 
 
 
