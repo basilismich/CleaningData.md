@@ -26,13 +26,13 @@ activitylabels <- fread(file.path(mywd, "UCI HAR Dataset/activity_labels.txt")
                         , col.names = c("classlabels", "activities"))
 features <- fread(file.path(mywd, "UCI HAR Dataset/features.txt")
                   , col.names = c("index", "featureNames"))
-y <- grep("(mean|std)\\(\\)", features[, featureNames]) #returns  the indices for strings given a regular expession
+featuresIwant <- grep("(mean|std)\\(\\)", features[, featureNames]) #returns  the indices for strings given a regular expession
 measurements <- features[features, featureNames]
 measurements <- gsub('[()]', '', measurements)  #i am removing the "()" with gsub()
 
 
 # Load the train datasets
-train <- fread(file.path(mywd, "UCI HAR Dataset/train/X_train.txt"))[, y, with = FALSE]
+train <- fread(file.path(mywd, "UCI HAR Dataset/train/X_train.txt"))[, featuresIwant, with = FALSE]
 data.table::setnames(train, colnames(train), measurements)
 trainActivities <- fread(file.path(mywd, "UCI HAR Dataset/train/Y_train.txt")
                        , col.names = c("Activity"))
@@ -41,7 +41,7 @@ trainSubjects <- fread(file.path(mywd, "UCI HAR Dataset/train/subject_train.txt"
 train <- cbind(trainSubjects, trainActivities, train)
 
 # Load the test datasets (same as train datasets)
-test <- fread(file.path(wd, "UCI HAR Dataset/test/X_test.txt"))[, y, with = FALSE]
+test <- fread(file.path(wd, "UCI HAR Dataset/test/X_test.txt"))[, featuresIwant, with = FALSE]
 data.table::setnames(test, colnames(test), measurements)
 testActivities <- fread(file.path(mywd, "UCI HAR Dataset/test/Y_test.txt")
                         , col.names = c("Activity"))
@@ -63,6 +63,7 @@ mergeddatasets <- reshape2::dcast(data = mergeddatasets, NumberofSubject + Activ
 
 write.table(mergeddatasets, file = "notmessy.csv",row.names=FALSE)
             
+
 
 
 
